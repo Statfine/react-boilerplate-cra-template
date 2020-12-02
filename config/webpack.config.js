@@ -27,6 +27,11 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 const postcssNormalize = require('postcss-normalize');
 
+const paletteLess = fs.readFileSync(
+  path.join(__dirname, '../src/theme/antd_theme.json'),
+  'utf8',
+);
+
 const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -58,6 +63,8 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
@@ -520,6 +527,37 @@ module.exports = function (webpackEnv) {
                 },
                 'sass-loader',
               ),
+            },
+            // antd theme
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              use: [
+                'style-loader',
+                'css-loader',
+                {
+                  loader: 'less-loader',
+                  options: {
+                    modifyVars: JSON.parse(paletteLess),
+                    javascriptEnabled: true,
+                  },
+                },
+              ],
+              sideEffects: true,
+            },
+            {
+              test: lessModuleRegex,
+              use: [
+                'style-loader',
+                'css-loader',
+                {
+                  loader: 'less-loader',
+                  options: {
+                    modifyVars: JSON.parse(paletteLess),
+                    javascriptEnabled: true,
+                  },
+                },
+              ],
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.

@@ -4,24 +4,36 @@
  *
  */
 
-import React, { memo } from 'react';
-import { DatePicker, message } from 'antd';
+import React, { memo, useState } from 'react';
+import { Button } from 'antd';
+import { Helmet } from 'react-helmet-async';
 
-import { StyleContainer } from './style';
+import { StyleContainer, StyleTitleP } from './style';
 
 interface Props {}
 
 export const LoginPage = memo((props: Props) => {
-  const handleChange = value => {
-    message.info(
-      `您选择的日期是: ${value ? value.format('YYYY年MM月DD日') : '未选择'}`,
-    );
+  const [requesting, setRequesting] = useState(false);
+
+  const handleLoginRequest = async () => {
+    setRequesting(true);
   };
 
   return (
-    <>
-      <StyleContainer>LoginPage</StyleContainer>
-      <DatePicker onChange={handleChange} />
-    </>
+    <StyleContainer>
+      <Helmet>
+        <title>登录</title>
+      </Helmet>
+      <StyleTitleP>Hello Wellcome</StyleTitleP>
+      <Button
+        type="primary"
+        size="large"
+        style={{ width: '368px' }}
+        onClick={handleLoginRequest}
+        disabled={requesting}
+      >
+        立即登录
+      </Button>
+    </StyleContainer>
   );
 });
