@@ -14,6 +14,13 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from 'serviceWorker';
 import 'sanitize.css/sanitize.css';
 
+import { ConfigProvider } from 'antd';
+// 由于 antd 组件的默认文案是英文，所以需要修改为中文
+import zhCN from 'antd/lib/locale/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+import 'antd/dist/antd.css';
+
 // Import root app
 import { App } from 'app';
 
@@ -30,11 +37,16 @@ const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 interface Props {
   Component: typeof App;
 }
+
+moment.locale('zh-cn');
+
 const ConnectedApp = ({ Component }: Props) => (
   <Provider store={store}>
     <HelmetProvider>
       <React.StrictMode>
-        <Component />
+        <ConfigProvider locale={zhCN}>
+          <Component />
+        </ConfigProvider>
       </React.StrictMode>
     </HelmetProvider>
   </Provider>
