@@ -32,7 +32,7 @@
   ],
   "scripts": {
     "// ---DEFAULT CRA---": "",
-    "start": "PORT=3001 node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "// ---TEMPLATE---": "Scripts will be also in the template",
@@ -183,6 +183,7 @@
     "jest-watch-typeahead": "0.6.1",
     "less": "3.8.1",
     "less-loader": "4.1.0",
+    "lodash": "4.17.20",
     "mini-css-extract-plugin": "0.11.3",
     "moment": "2.29.1",
     "optimize-css-assets-webpack-plugin": "5.0.4",

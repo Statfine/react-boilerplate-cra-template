@@ -14,6 +14,7 @@ import { GlobalStyle } from 'styles/global-styles';
 
 import { HomePage } from './containers/HomePage/Loadable';
 import { LoginPage } from './containers/LoginPage/Loadable';
+import { UacSucPage } from './containers/UacSucPage/Loadable';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
 
 export function App() {
@@ -27,6 +28,7 @@ export function App() {
         <Route exact path="/" component={LoginPage} />
         <Route path="/home" component={HomePage} />
         <Route path="/login" component={LoginPage} />
+        <Route path="/uacsuc" component={UacSucPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

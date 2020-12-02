@@ -12,7 +12,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import * as serviceWorker from 'serviceWorker';
-import 'sanitize.css/sanitize.css';
+// import 'sanitize.css/sanitize.css';
 
 import { ConfigProvider } from 'antd';
 // 由于 antd 组件的默认文案是英文，所以需要修改为中文
@@ -21,6 +21,7 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 // import 'antd/dist/antd.css';
 import 'antd/dist/antd.less';
+import { GlobalStyle } from './theme/globalStyle';
 
 // Import root app
 import { App } from 'app';
@@ -46,6 +47,7 @@ const ConnectedApp = ({ Component }: Props) => (
     <HelmetProvider>
       <React.StrictMode>
         <ConfigProvider locale={zhCN}>
+          <GlobalStyle />
           <Component />
         </ConfigProvider>
       </React.StrictMode>
