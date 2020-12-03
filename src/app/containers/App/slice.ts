@@ -32,11 +32,11 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     someAction(state, action: PayloadAction<any>) {},
-    fetchUserAction(state) {
+    actionFetchUser(state) {
       state.userFetching = true;
       state.userLogined = true;
     },
-    initUser(state, action: PayloadAction<any>) {
+    actionInitUser(state, action: PayloadAction<any>) {
       state.userInfo = action.payload;
     },
   },

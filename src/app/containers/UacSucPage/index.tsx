@@ -46,7 +46,7 @@ export const UacSucPage = memo(() => {
         );
         setLocal(LOCAL_REFRESH_TOKEN, oauthInfo.refresh_token);
         console.log('oauthInfo', oauthInfo);
-        dispatch(actions.fetchUserAction());
+        dispatch(actions.actionFetchUser());
         history.push('/user');
       } catch (error) {
         console.log(error);

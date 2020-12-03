@@ -22,7 +22,7 @@ export function* fetchUserInfoSaga() {
       id: data.id,
       name: data.name || data.email,
     };
-    yield put(actions.initUser(info));
+    yield put(actions.actionInitUser(info));
   } catch (error) {
     console.error(error);
   }
@@ -30,5 +30,5 @@ export function* fetchUserInfoSaga() {
 
 export function* appSaga() {
   yield fork(fetchUserInfoWatcher);
-  yield takeLatest(actions.fetchUserAction.type, fetchUserInfoSaga);
+  yield takeLatest(actions.actionFetchUser.type, fetchUserInfoSaga);
 }
