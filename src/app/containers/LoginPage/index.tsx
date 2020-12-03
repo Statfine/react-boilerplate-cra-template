@@ -9,7 +9,7 @@ import { Button } from 'antd';
 import { Helmet } from 'react-helmet-async';
 import { baseHost } from 'app/common/constants';
 
-import { StyleContainer, StyleTitleP } from './style';
+import { StyleContainer } from './style';
 import { fetchLoginUrl } from './api';
 
 interface Props {}
@@ -38,7 +38,6 @@ export const LoginPage = memo((props: Props) => {
       <Helmet>
         <title>登录</title>
       </Helmet>
-      <StyleTitleP>Hello Wellcome</StyleTitleP>
       <Button
         type="primary"
         size="large"

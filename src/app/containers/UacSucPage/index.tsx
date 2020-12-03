@@ -4,12 +4,21 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components/macro';
-import { Spin, Space } from 'antd';
+import { LoadingIndicator } from 'app/components/LoadingIndicator';
 import { getQueryString } from 'utils/utils';
-import { setLocal } from 'utils/localStorage';
+import {
+  LOCAL_ACCESS_TOKEN,
+  LOCAL_EXPIRES_IN,
+  LOCAL_REFRESH_TOKEN,
+  setLocal,
+} from 'utils/localStorage';
+import { useHistory } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+import { actions } from '../App/slice';
 
 import { fetchToken } from './api';
 
@@ -22,32 +31,41 @@ const StyleContainer = styled.div`
 `;
 
 export const UacSucPage = memo(() => {
+  let history = useHistory();
+  const dispatch = useDispatch();
+
+  const initUser = useCallback(
+    async (code: string | null) => {
+      try {
+        const result = await fetchToken({ code: code as string });
+        const oauthInfo = JSON.parse(window.atob(result.data.token));
+        setLocal(LOCAL_ACCESS_TOKEN, oauthInfo.access_token);
+        setLocal(
+          LOCAL_EXPIRES_IN,
+          `${Date.now() + oauthInfo.expires_in * 1000}`,
+        );
+        setLocal(LOCAL_REFRESH_TOKEN, oauthInfo.refresh_token);
+        console.log('oauthInfo', oauthInfo);
+        dispatch(actions.fetchUserAction());
+        history.push('/user');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [history, dispatch],
+  );
+
   useEffect(() => {
     const code = getQueryString('code');
     initUser(code);
-  }, []);
-
-  const initUser = async (code: string | null) => {
-    try {
-      const result = await fetchToken({ code: code as string });
-      const oauthInfo = JSON.parse(window.atob(result.data.token));
-      setLocal('access_token', oauthInfo.access_token);
-      setLocal('expires_in', `${Date.now() + oauthInfo.expires_in * 1000}`);
-      setLocal('refresh_token', oauthInfo.refresh_token);
-      console.log('oauthInfo', oauthInfo);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [initUser]);
 
   return (
     <StyleContainer>
       <Helmet>
         <title>登录跳转</title>
       </Helmet>
-      <Space size="large">
-        <Spin size="large" />
-      </Space>
+      <LoadingIndicator />
       <p>跳转中...</p>
     </StyleContainer>
   );

@@ -8,14 +8,15 @@
 
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import { GlobalStyle } from 'styles/global-styles';
+import { AppPage } from './containers/App';
 
-import { HomePage } from './containers/HomePage/Loadable';
-import { LoginPage } from './containers/LoginPage/Loadable';
-import { UacSucPage } from './containers/UacSucPage/Loadable';
-import { NotFoundPage } from './components/NotFoundPage/Loadable';
+// import { HomePage } from './containers/HomePage/Loadable';
+// import { LoginPage } from './containers/LoginPage/Loadable';
+// import { UacSucPage } from './containers/UacSucPage/Loadable';
+// import { NotFoundPage } from './components/NotFoundPage/Loadable';
 
 export function App() {
   return (
@@ -23,14 +24,7 @@ export function App() {
       <Helmet titleTemplate="%s - 前台模版" defaultTitle="React 模版">
         <meta name="description" content="这是一个前台页面模版" />
       </Helmet>
-
-      <Switch>
-        <Route exact path="/" component={LoginPage} />
-        <Route path="/home" component={HomePage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/uacsuc" component={UacSucPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      <AppPage />
       <GlobalStyle />
     </BrowserRouter>
   );

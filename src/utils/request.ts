@@ -3,7 +3,14 @@ import { merge } from 'lodash';
 import { message } from 'antd';
 
 import { API_BASE } from '../app/common/constants';
-import { getLocal, setLocal, clearLocal } from './localStorage';
+import {
+  LOCAL_ACCESS_TOKEN,
+  LOCAL_EXPIRES_IN,
+  LOCAL_REFRESH_TOKEN,
+  getLocal,
+  setLocal,
+  clearLocal,
+} from './localStorage';
 
 let isRefreshing: boolean = false;
 let tempRequests: (() => void)[];
@@ -85,9 +92,9 @@ export function requestNoSnack(
       'Content-Type': 'application/json',
     },
   };
-  if (getLocal('access_token')) {
+  if (getLocal(LOCAL_ACCESS_TOKEN)) {
     defaultOptions.headers['Authorization'] = `Bearer ${getLocal(
-      'access_token',
+      LOCAL_ACCESS_TOKEN,
     )}`;
   }
 
@@ -108,15 +115,15 @@ export function refreshTokenRequest() {
     const refreshOptions = {
       method: 'POST',
       body: JSON.stringify({
-        refresh_token: getLocal('refresh_token'),
+        refresh_token: getLocal(LOCAL_REFRESH_TOKEN),
       }),
     };
     request(`${API_BASE}/uac/refresh/token`, refreshOptions, false)
       .then(res => {
         const result = res.data;
-        setLocal('access_token', result.access_token);
-        setLocal('expires_in', `${Date.now() + result.expires_in * 1000}`);
-        setLocal('refresh_token', result.refresh_token);
+        setLocal(LOCAL_ACCESS_TOKEN, result.access_token);
+        setLocal(LOCAL_EXPIRES_IN, `${Date.now() + result.expires_in * 1000}`);
+        setLocal(LOCAL_REFRESH_TOKEN, result.refresh_token);
         isRefreshing = false;
         tempRequests.forEach(func => func()); // 刷新成功执行暂存请求
         tempRequests.length = 0; // 执行完清空
@@ -160,8 +167,8 @@ export default function request(
     !url.includes('/uac/refresh/token') &&
     needToken &&
     (needRefresh ||
-      !localStorage.access_token ||
-      Date.now() > localStorage.expires_in - 3600000 * 1.8)
+      !getLocal(LOCAL_ACCESS_TOKEN) ||
+      Date.now() > Number(getLocal(LOCAL_EXPIRES_IN)) - 3600000 * 1.8)
   ) {
     refreshTokenRequest();
     return addTemp(url, options, needToken); // 将当前请求加入暂存
