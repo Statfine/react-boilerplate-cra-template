@@ -42,4 +42,4 @@ const appSlice = createSlice({
   },
 });
 
-export const { actions, reducer, name: sliceKey } = appSlice;
+export const { actions: appActions, reducer, name: sliceKey } = appSlice;

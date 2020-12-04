@@ -18,7 +18,7 @@ import {
 import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { actions } from '../App/slice';
+import { appActions } from '../App/slice';
 
 import { fetchToken } from './api';
 
@@ -46,7 +46,7 @@ export const UacSucPage = memo(() => {
         );
         setLocal(LOCAL_REFRESH_TOKEN, oauthInfo.refresh_token);
         console.log('oauthInfo', oauthInfo);
-        dispatch(actions.actionFetchUser());
+        dispatch(appActions.actionFetchUser());
         history.push('/user');
       } catch (error) {
         console.log(error);

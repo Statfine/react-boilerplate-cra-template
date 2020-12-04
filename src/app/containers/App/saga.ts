@@ -1,7 +1,7 @@
 import { fork, call, takeLatest, all, put } from 'redux-saga/effects';
 import { LOCAL_ACCESS_TOKEN, getLocal } from 'utils/localStorage';
 import { fetchUserInfo } from './api';
-import { actions } from './slice';
+import { appActions } from './slice';
 import { UserInfoState } from './types';
 
 function isAllow(): boolean {
@@ -22,7 +22,7 @@ export function* fetchUserInfoSaga() {
       id: data.id,
       name: data.name || data.email,
     };
-    yield put(actions.actionInitUser(info));
+    yield put(appActions.actionInitUser(info));
   } catch (error) {
     console.error(error);
   }
@@ -30,5 +30,5 @@ export function* fetchUserInfoSaga() {
 
 export function* appSaga() {
   yield fork(fetchUserInfoWatcher);
-  yield takeLatest(actions.actionFetchUser.type, fetchUserInfoSaga);
+  yield takeLatest(appActions.actionFetchUser.type, fetchUserInfoSaga);
 }

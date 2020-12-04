@@ -1,28 +1,38 @@
+#前台模版
+
+- https://redux-toolkit.js.org
+- https://blog.csdn.net/shenzhongkang/article/details/108409377
+
 # 前台模版
 
-> 基于 react-boilerplate-cra-template，npm run eject 已生成配置项
+> 基于 cra-template-rb 模版，配合 create-react-app 命令，npm run eject 已生成配置项
+>
+> ```bash
+> npx create-react-app --template cra-template-rb your-app-name
+> npm run cleanAndSetup
+> npm run eject
+> ```
+
+````
+
 
 ## Build Setup
 
 ```bash
-# install dependencies
 npm install
-
-# serve with hot reload at localhost:3011
 npm start
+localhost:3011
 
-# creat page template
+# 新建页面|组件脚本
 npm run generate
 
-# build for production with minification
+# 构建
 npm run build
 
-# code standard
+# eslint
 npm run lint
 
-```
-
-## 项目概述
+````
 
 # 项目布局
 
@@ -39,7 +49,7 @@ npm run lint
 │   │   ├── common                              // 项目常量
 │   │   │   └── constants.js
 │   ├── components                              // 组件文件
-│   │   └── LoadingIndicator                     // 加载组件
+│   │   └── LoadingIndicator                    // 加载组件
 │   ├── containers                              // 页面文件
 |   |   ├── APP
 |   |   ├── HomePage
@@ -48,16 +58,17 @@ npm run lint
 |   |   ├── UserPage
 │   │   └── index
 │   ├── locales                               // 国际化
-│   ├── styles                                // 全局样式
+│   ├── styles
+|   |   ├── global-styles                     // 全局样式
+│   │   └── media                             // 响应式媒体查询
 │   ├── theme                                 // 主题
 │   ├── types                                 // ts
-│   ├── utils                                   // 工具
-
+│   ├── utils                                 // 工具
 .
 
 ```
 
-## 代码规范
+# 代码规范
 
 ```bash
 # 代码校验
@@ -72,4 +83,12 @@ action  action + 名称
 
 # selectors文件方法名称
 makeSelect + 数据名称
+```
+
+## 第三方库
+
+```bash
+# https://github.com/mjrussell/redux-auth-wrapper  权限验证
+# https://github.com/reduxjs/redux-toolkit  中间件优化redux
+
 ```
