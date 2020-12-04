@@ -1,6 +1,6 @@
 import { fork, call, takeLatest, all, put } from 'redux-saga/effects';
 import { LOCAL_ACCESS_TOKEN, getLocal } from 'utils/localStorage';
-import { fetchUserInfo } from './api';
+import { apiFetchUserInfo } from './api';
 import { appActions } from './slice';
 import { UserInfoState } from './types';
 
@@ -12,12 +12,12 @@ function isAllow(): boolean {
 
 function* fetchUserInfoWatcher() {
   if (isAllow() || !getLocal(LOCAL_ACCESS_TOKEN)) return;
-  yield all([call(fetchUserInfoSaga)]);
+  yield all([call(apiFetchUserInfo)]);
 }
 
 export function* fetchUserInfoSaga() {
   try {
-    const { data } = yield call(fetchUserInfo);
+    const { data } = yield call(apiFetchUserInfo);
     const info: UserInfoState = {
       id: data.id,
       name: data.name || data.email,
