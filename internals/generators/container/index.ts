@@ -50,7 +50,7 @@ export const containerGenerator: PlopGenerator = {
       type: 'confirm',
       name: ContainerProptNames.wantHeaders,
       default: false,
-      message: 'Do you want headers?',
+      message: 'Do you want Helmet?',
     },
     {
       type: 'confirm',
@@ -71,25 +71,25 @@ export const containerGenerator: PlopGenerator = {
       default: true,
       message: 'Do you want to use styled-components?',
     },
-    {
-      type: 'confirm',
-      name: ContainerProptNames.wantTranslations,
-      default: false,
-      message:
-        'Do you want i18n translations (i.e. will this component use text)?',
-    },
+    // {
+    //   type: 'confirm',
+    //   name: ContainerProptNames.wantTranslations,
+    //   default: false,
+    //   message:
+    //     'Do you want i18n translations (i.e. will this component use text)?',
+    // },
     {
       type: 'confirm',
       name: ContainerProptNames.wantLoadable,
       default: false,
       message: 'Do you want to load the component asynchronously?',
     },
-    {
-      type: 'confirm',
-      name: ContainerProptNames.wantTests,
-      default: false,
-      message: 'Do you want to have tests?',
-    },
+    // {
+    //   type: 'confirm',
+    //   name: ContainerProptNames.wantTests,
+    //   default: false,
+    //   message: 'Do you want to have tests?',
+    // },
   ],
   actions: (data: { [P in ContainerProptNames]: string }) => {
     const containerPath = `${containersPath}/{{properCase ${ContainerProptNames.ComponentName}}}`;
